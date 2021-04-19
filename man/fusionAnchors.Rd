@@ -24,7 +24,7 @@ fusionAnchors(
 
 \item{drawAnchors}{Show the anchors}
 
-\item{showvalues}{Display values of the anchors}
+\item{showvalues}{Show the values of the anchors}
 
 \item{anchorSides}{Specify the number of sides to define the shape of the anchor}
 
@@ -49,12 +49,10 @@ fusionAnchors(
 }
 \examples{
 library(fusionchartsR)
-
 df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-fusionPlot(data = df, type = "line") \%>\%
-  fusionAnchors(anchorRadius = "6", anchorBorderThickness = "2", 
-  anchorBorderColor = "#127fcb", anchorSides = "3", 
-  anchorBgColor = "#d3f7ff") \%>\%
-  fusionTheme(theme = "fusion")
+df \%>\%
+fusionPlot(x = "label", y = "value", type = "line") \%>\%
+fusionAnchors(anchorRadius = "6", anchorBorderThickness = "2") \%>\%
+fusionTheme(theme = "fusion")
 
 }

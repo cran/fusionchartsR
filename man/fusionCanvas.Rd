@@ -61,10 +61,10 @@ fusionCanvas(
 }
 \examples{
 library(fusionchartsR)
-
 df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-fusionPlot(data = df, type = "column2d") \%>\%
-  fusionCanvas(showCanvasBorder = TRUE, canvasBorderThickness = "4", canvasBorderAlpha = "80") \%>\%
-  fusionTheme(theme = "fusion")
+df \%>\%
+fusionPlot(x = "label", y = "value", type = "column2d") \%>\%
+fusionCanvas(showCanvasBorder = TRUE, canvasBorderThickness = "4", canvasBorderAlpha = "80") \%>\%
+fusionTheme(theme = "fusion")
 
 }

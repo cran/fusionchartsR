@@ -43,10 +43,10 @@ fusionBackground(
 }
 \examples{
 library(fusionchartsR)
-
 df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-fusionPlot(data = df, type = "column2d") \%>\%
-  fusionBackground(showBorder = TRUE, bgColorStart = "#DDDDDD") \%>\%
-  fusionTheme(theme = "fusion")
+df \%>\%
+fusionPlot(x = "label", y = "value", type = "column3d") \%>\%
+fusionBackground(showBorder = TRUE, bgColorStart = "#DDDDDD") \%>\%
+fusionTheme(theme = "fusion")
 
 }

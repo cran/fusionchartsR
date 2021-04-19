@@ -6,6 +6,7 @@
 \usage{
 fusionCustomAxis(
   fusionPlot,
+  showlabels = TRUE,
   xAxisPosition = c("bottom", "top", "left", "right"),
   yAxisPosition = c("left", "right", "top", "bottom"),
   AxisNameBorderColor = NULL,
@@ -39,6 +40,8 @@ fusionCustomAxis(
 }
 \arguments{
 \item{fusionPlot}{fusionPlot object got by \code{fusionPlot()}}
+
+\item{showlabels}{Display the data labels}
 
 \item{xAxisPosition}{change the position of the x-axis}
 
@@ -103,11 +106,11 @@ fusionCustomAxis(
 }
 \examples{
 library(fusionchartsR)
-
 df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-fusionPlot(data = df, type = "column3d") \%>\%
-  fusionAxis(xAxisName = "Countries", yAxisName = "Numbers", AxisNameFontSize = "20") \%>\%
-  fusionCustomAxis(xAxisPosition = "top", yAxisPosition = "right") \%>\%
-  fusionTheme(theme = "gammel")
+df \%>\%
+fusionPlot(x = "label", y = "value", type = "column3d") \%>\%
+fusionAxis(xAxisName = "Countries", yAxisName = "Numbers", AxisNameFontSize = "20") \%>\%
+fusionCustomAxis(xAxisPosition = "top", yAxisPosition = "right") \%>\%
+fusionTheme(theme = "gammel")
 
 }

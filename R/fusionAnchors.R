@@ -6,7 +6,7 @@
 #'
 #' @param fusionPlot fusionPlot object got by \code{fusionPlot()}
 #' @param drawAnchors Show the anchors
-#' @param showvalues Display values of the anchors
+#' @param showvalues Show the values of the anchors
 #' @param anchorSides Specify the number of sides to define the shape of the anchor
 #' @param anchorRadius Set the radius of the anchor
 #' @param anchorAlpha Set the transparency of the anchor
@@ -19,13 +19,11 @@
 #' 
 #' @examples
 #' library(fusionchartsR)
-#' 
 #' df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-#' fusionPlot(data = df, type = "line") %>%
-#'   fusionAnchors(anchorRadius = "6", anchorBorderThickness = "2", 
-#'   anchorBorderColor = "#127fcb", anchorSides = "3", 
-#'   anchorBgColor = "#d3f7ff") %>%
-#'   fusionTheme(theme = "fusion")
+#' df %>%
+#' fusionPlot(x = "label", y = "value", type = "line") %>%
+#' fusionAnchors(anchorRadius = "6", anchorBorderThickness = "2") %>%
+#' fusionTheme(theme = "fusion")
 #'
 #' @export
 fusionAnchors <- function(fusionPlot, drawAnchors = TRUE, showvalues = FALSE, anchorSides =  "0", anchorRadius = "3", anchorAlpha = "100", anchorBorderThickness = "1", 

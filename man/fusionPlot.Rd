@@ -4,34 +4,46 @@
 \alias{fusionPlot}
 \title{Create new charts}
 \usage{
-fusionPlot(
-  data,
-  type = "column2d",
-  width = "100\%",
-  height = "100\%",
-  numberSuffix = NULL,
-  exportEnabled = FALSE
-)
+fusionPlot(data, x, y, col = NULL, type = "column2d", numberSuffix = NULL)
 }
 \arguments{
 \item{data}{Default dataset to use}
 
-\item{type}{Chart type. Available charts can be found at \url{https://www.fusioncharts.com/dev/chart-guide/list-of-charts}}
+\item{x, y}{character name of variable}
 
-\item{width, height}{Size of the chart. Must be a valid CSS unit (like \code{'100\%'}, \code{'400px'}, \code{'600'})}
+\item{col}{character name of color variable (only available to Multiple chart)}
+
+\item{type}{See details.}
 
 \item{numberSuffix}{Specify the suffix for all the Y-axis values on the chart}
-
-\item{exportEnabled}{Enable chart exporting}
 }
 \description{
-Main function to make interactive charts
+Main function to make interactive charts.
+Check all charts at \url{https://www.fusioncharts.com/charts}
 }
 \examples{
 library(fusionchartsR)
 
- df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-fusionPlot(data = df, type = 'pie2d') \%>\%
- fusionTheme(theme = "fusion")
-  
+# Single
+df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
+df \%>\%
+fusionPlot(x = "label", y = "value", type = "pie2d") \%>\%
+fusionTheme(theme = "fusion")
+
+# Multiple
+new.data <- data.frame(
+label = rep(x = c(2012:2016), times = 2),
+seriesname = c(rep("iOS App Store", 5), rep("Google Play Store", 5)),
+values = c(1:10)
+)
+
+new.data \%>\%
+fusionPlot(
+x = "label",
+y = "values",
+col = "seriesname",
+type = "mscolumn2d",
+) \%>\%
+fusionTheme(theme = "fusion")
+
 }
