@@ -1,6 +1,6 @@
 Package: fusionchartsR
 Type: Package
-Version: 0.0.2
+Version: 0.0.3
 Title: Embedding 'FusionCharts Javascript' Library in R
 Description: FusionCharts provides awesome and minimalist functions to make beautiful interactive charts <https://www.fusioncharts.com/>.
 Authors@R: 
@@ -10,14 +10,12 @@ Authors@R:
            email = "yahiaoui-martinez.alex@outlook.com")
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: false
-RoxygenNote: 7.1.1
-Imports: htmlwidgets, jsonlite, magrittr, caret, pROC, reshape2, shiny,
-        survival
+RoxygenNote: 7.1.2
+Imports: htmlwidgets, jsonlite, magrittr, shiny
 Suggests: rmarkdown, knitr
 NeedsCompilation: no
-Packaged: 2021-04-18 20:32:41 UTC; yahia
+Packaged: 2021-12-20 20:27:50 UTC; yahia
 Author: Alex Yahiaoui Martinez [aut, cre]
 Maintainer: Alex Yahiaoui Martinez <yahiaoui-martinez.alex@outlook.com>
 Repository: CRAN
-Date/Publication: 2021-04-19 04:20:02 UTC
+Date/Publication: 2021-12-20 20:40:05 UTC

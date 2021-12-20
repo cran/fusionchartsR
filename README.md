@@ -1,14 +1,12 @@
-# fusionchartsR <a href=#><img src='fusionchartsR_logo.PNG' align="right" height="139" /></a>
+# fusionchartsR <a href=#><img src='inst/fusionchartsR_logo.png' align="right" height="139" /></a>
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/fusionchartsR)](https://cran.r-project.org/package=fusionchartsR)
 [![](https://cranlogs.r-pkg.org/badges/fusionchartsR)](https://cran.r-project.org/package=fusionchartsR)
-![](https://img.shields.io/badge/github%20version-0.0.2-orange.svg)
+![](https://img.shields.io/badge/github%20version-0.0.3-green.svg)
 
-## Update - 04/13/2021
+## Bugs
 
-* Adding multiple charts 
-* Adding new features
-* Update examples
+* `fusionTrendline()` doesn't work with `fusionMultiPlot()`
 
 ## Installation
 
@@ -29,8 +27,11 @@ devtools::install_github("alexym1/fusionchartsR")
 
 ```{r}
 library(fusionchartsR)
-library(shiny)
-runDemo()
+
+df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
+df %>%
+fusionPlot(x = "label", y = "value", type = "pie2d") %>%
+fusionTheme(theme = "gammel")
 ```
 
 ## Ressources

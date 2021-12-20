@@ -22,10 +22,9 @@ HTMLWidgets.widget({
     dataSource: {
         // Chart Configuration
         "chart": {
+          
           // fusionPlot()
           "numberSuffix": x.numberSuffix,
-          "drawcrossline": x.drawcrossline,
-          "mapbycategory": x.mapbycategory,
           
           "mediancolor": "#FFFFFF",
           "showmean": x.showmean,
@@ -296,13 +295,9 @@ HTMLWidgets.widget({
           x.categories
         ],
         
-        "colorrange": x.colorrange,
-
-        "dataset": x.dataset,
-        
-        // heatmap
-        "columns": x.columns,
-        "rows": x.rows,
+        "dataset": [
+          x.dataset
+        ],
 
         // fusionTrendline()
         "trendlines": [{
