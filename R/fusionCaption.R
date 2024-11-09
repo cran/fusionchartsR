@@ -16,11 +16,16 @@
 #' @examples
 #' library(fusionchartsR)
 #' 
-#' df <- data.frame(label = c("Venezuela", "Saudi", "Canada", "Russia"), value = c(290, 260,180, 115))
-#' fusionPlot(data = df, x = "label", y = "value", type = "column2d") %>%
-#'   fusionCaption(caption = "Caption on the left", captionAlignment = "left") %>%
-#'   fusionSubcaption(subcaption = "subcaption too") %>%
-#'   fusionTheme(theme = "fusion")
+#' mtcars %>%
+#' fusionPlot(
+#' x = "cyl", 
+#' y = "mpg", 
+#' type = "boxandwhisker2d"
+#' ) %>%
+#' fusionCaption(caption = "Caption on the left", captionAlignment = "left") %>%
+#' fusionSubcaption(subcaption = "subcaption too") %>%
+#' fusionPalette(palettecolors = c("#5D62B5", "#979AD0")) %>%
+#' fusionTheme(theme = "fusion") 
 #'
 #' @export
 fusionCaption <- function(fusionPlot, caption = "Add a caption here", captionFont = "Arial",
@@ -45,4 +50,5 @@ fusionCaption <- function(fusionPlot, caption = "Add a caption here", captionFon
   fusionPlot$x$captionOnTop <- CaptionAttrs$captionOnTop
   
   return(fusionPlot)
+
 }

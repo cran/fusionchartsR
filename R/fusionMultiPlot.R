@@ -7,34 +7,130 @@
 #' @import htmlwidgets
 #' @importFrom jsonlite toJSON
 #'
-#'
 #' @param data Default dataset to use
 #' @param x,y character name of variable
 #' @param col define seriesname variable
-#' @param type See `available_charts()`
+#' @param type type of chart
 #' @param numberSuffix Specify the suffix for all the Y-axis values on the chart
 #'
 #'
 #' @export
-fusionMultiPlot <- function(data,x, y, col = NULL, type = "msstepline", numberSuffix = NULL) {
+fusionMultiPlot <- function(data, x, y, col, type = "msstepline", numberSuffix = NULL) {
   
-  # Category
+  # Include unit tests
+  stopifnot(is.data.frame(data))
+  stopifnot(is.character(x))
+  stopifnot(is.character(y))
+  stopifnot(is.character(col))
+  stopifnot(is.character(type))
+  stopifnot(is.character(numberSuffix) | is.null(numberSuffix))
+  
+  
+  # Include key license
+  license <- Sys.getenv("LICENSE_FUSIONCHARTS")
+  
+  # Groups
   xaxis <- factor(data[,x])
-  df <- list(category = data.frame(label = as.character(levels(xaxis))))
-  category <- toJSON(x = df, pretty = TRUE)
-  
-  # Dataset
   n <- levels(factor(data[,col]))
-  df.list <- lapply(1:length(n), function(x){
-    list(
-      seriesname = n[x], 
-      data = data.frame( 
-        value = as.character(data[data[,col] == n[x],y])
+  
+  if(type == "scatter"){
+    
+    colors <- rep(
+      c("#5E72E3", "#FF595E", "#FFCA3A", "#8AC926", "#FB5607", "#00bbf9"),
+      length.out = length(unique(data[,col]))
+    )
+    
+    # Categories
+    pos_x <- round(x = as.numeric(levels(xaxis)), digits = 2)
+    idx <- floor(length(pos_x) / 7)
+    pos_x[!(seq_along(pos_x) %% idx == 1)] <- NA
+    
+    category <- list(
+      category = data.frame(
+        x = as.character(levels(xaxis)),
+        label = pos_x
+        )
+      )
+    
+    category <- na.omit(category$category)
+    
+    # Dataset
+    df.list <- lapply(1:length(n), function(z){
+      list(
+        seriesname = n[z], 
+        anchorbgcolor = colors[z],
+        anchorBorderColor = colors[z],
+        data = data.frame( 
+          x = as.character(data[data[,col] == n[z], x]),
+          y = as.character(data[data[,col] == n[z], y])
+        )
+      )
+    })
+    
+  } else if(type == "boxandwhisker2d"){
+    
+    # Categories
+    category <- list(
+      category = data.frame(
+        label = as.character(levels(xaxis))
       )
     )
-  })
+    
+    # Dataset
+    df.list <- lapply(1:length(n), function(i){
+      
+      tmp <- data[data[,col] == n[i],]
+      
+      res <- lapply(1:length(levels(xaxis)), function(j){
+        
+        yaxis <- na.omit(tmp[tmp[,x] == levels(xaxis)[j],y])
+        stats <- boxplot.stats(yaxis)
+        
+        if(length(stats$out) >= 1){
+          list(
+            value = toString(yaxis[! yaxis %in% unique(stats$out)]),
+            outliers = toString(unique(stats$out))
+          )
+        } else {
+          list(
+            value = toString(yaxis)
+          )
+        }
+        
+      })
+      
+      list(
+        seriesname = n[i], 
+        data = res
+      )
+      
+    })
+    
+    
+  } else {
+    
+    # Categories
+    category <- list(
+      category = data.frame(
+        label = as.character(levels(xaxis))
+        )
+      )
+    
+    # Dataset
+    df.list <- lapply(1:length(n), function(z){
+      list(
+        seriesname = n[z], 
+        data = data.frame( 
+          value = as.character(data[data[,col] == n[z],y])
+        )
+      )
+    })
+    
+  }
   
+  categories <- toJSON(x = category, pretty = TRUE)
   dataset <- toJSON(x = df.list, pretty = TRUE, auto_unbox = TRUE)
+  
 
 #' @examples
 #' library(fusionchartsR)
@@ -58,8 +154,9 @@ fusionMultiPlot <- function(data,x, y, col = NULL, type = "msstepline", numberSu
   
   # forward options using x
   x <- list(
+    key_license = license,
     data = data,
-    categories = category,
+    categories = categories,
     dataset = dataset,
     type = type,
     numberSuffix = numberSuffix
@@ -83,7 +180,8 @@ fusionMultiPlot <- function(data,x, y, col = NULL, type = "msstepline", numberSu
     fusionCustomLegend() %>%
     fusionPalette() %>%
     fusionAnchors() %>%
-    # fusionTrendline() %>%
+    fusionTrendline() %>%
+    fusionCustomBoxplot() %>%
     fusionDiv() %>%
     fusionTooltip() %>%
     fusionLogo() %>%

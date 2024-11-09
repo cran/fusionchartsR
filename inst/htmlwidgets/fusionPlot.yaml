@@ -12,6 +12,3 @@ dependencies:
     - js/themes/fusioncharts.theme.ocean.js
     - js/themes/fusioncharts.theme.umber.js
     - js/themes/fusioncharts.theme.zune.js
-    stylesheet:
-    - assets/css/fusiondesign.css
-    - assets/css/style.css

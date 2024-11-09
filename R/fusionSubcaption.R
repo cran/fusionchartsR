@@ -43,4 +43,5 @@ fusionSubcaption <- function(fusionPlot, subcaption = "Add a subCaption here", s
   fusionPlot$x$subcaptionFontBold <- SubcaptionAttrs$subcaptionFontBold
   
   return(fusionPlot)
+
 }

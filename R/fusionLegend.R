@@ -27,7 +27,7 @@
 #'
 #' @export
 fusionLegend <- function(fusionPlot, showLegend = TRUE, interactiveLegend = TRUE, legendPosition = c("bottom", "left", "right"),
-                         legendAllowDrag = FALSE, legendIconScale = "1", reverseLegend = FALSE, legendCaption = NULL,
+                         legendAllowDrag = FALSE, legendIconScale = "1", reverseLegend = FALSE, legendCaption = "",
                          legendCaptionBold = TRUE, legendCaptionFont = "Arial", legendCaptionFontSize = "14", legendCaptionFontColor = "#333333"){
   LegendAttrs <- list()
   LegendAttrs$showLegend <- as.numeric(showLegend)
@@ -53,5 +53,7 @@ fusionLegend <- function(fusionPlot, showLegend = TRUE, interactiveLegend = TRUE
   fusionPlot$x$legendCaptionFont <- LegendAttrs$legendCaptionFont
   fusionPlot$x$legendCaptionFontSize <- LegendAttrs$legendCaptionFontSize 
   fusionPlot$x$legendCaptionFontColor  <- LegendAttrs$legendCaptionFontColor
+  
   return(fusionPlot)
+
 }

@@ -38,22 +38,16 @@
 #' fusionTheme(theme = "candy")
 #'
 #' @export
-fusionTrendline <- function(fusionPlot, isTrendZone = FALSE, displayValue = NULL, startValue = NULL, endValue = NULL, color = "#000000", 
+fusionTrendline <- function(fusionPlot, isTrendZone = FALSE, displayValue = "", startValue = "", endValue = "", color = "#FFFFFF", 
                             thickness = 2, alpha = "60", valueOnRight = TRUE, trendValueFont = "Arial", trendValueFontSize = "12",
                             trendValueFontBold = TRUE, trendValueFontItalic = FALSE, trendValueAlpha = "80", trendValueBgColor = "#000000", trendValueBgAlpha =  "10", 
                             trendValueBorderColor = "#000000", trendValueBorderAlpha = "80", trendValueBorderPadding = "4", trendValueBorderRadius = "5", trendValueBorderThickness = "2", trendValueBorderDashed = FALSE, 
                             trendValueBorderDashLen = "#5A5A5A", trendValueBorderDashGap = "1"){
   
   TrendlineAttrs <- list()
+  
   TrendlineAttrs$isTrendZone <- as.numeric(isTrendZone)
-  
-  if(is.null(displayValue)){
-    TrendlineAttrs$displayValue <- ""
-  }
-  else {
-    TrendlineAttrs$displayValue <- displayValue
-  }
-  
+  TrendlineAttrs$displayValue <- displayValue
   TrendlineAttrs$startValue <- startValue
   TrendlineAttrs$endValue <- endValue
   TrendlineAttrs$color <- color
@@ -102,4 +96,5 @@ fusionTrendline <- function(fusionPlot, isTrendZone = FALSE, displayValue = NULL
   fusionPlot$x$trendValueBorderDashGap <- TrendlineAttrs$trendValueBorderDashGap
   
   return(fusionPlot)
+  
 }

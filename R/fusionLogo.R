@@ -37,4 +37,5 @@ fusionLogo <- function(fusionPlot, logoURL = "NULL", logoAlpha = "40", logoScale
   fusionPlot$x$logoPosition <- LogoAttrs$logoPosition
   fusionPlot$x$logoLink <- LogoAttrs$logoLink
   return(fusionPlot)
+
 }

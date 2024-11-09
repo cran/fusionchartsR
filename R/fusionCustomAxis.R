@@ -8,6 +8,7 @@
 #' @param showlabels Display the data labels
 #' @param xAxisPosition change the position of the x-axis
 #' @param yAxisPosition change the position of the y-axis
+#' @param yAxisMaxValue Set the upper limit of the y-axis
 #' @param AxisNameBorderColor Set the border color of the name of the axis
 #' @param AxisNameBorderAlpha Set the transparency of the border around the name of axis
 #' @param AxisNameBorderPadding Set the padding of the border around the name of the axis
@@ -47,7 +48,7 @@
 #' fusionTheme(theme = "gammel")
 #'
 #' @export
-fusionCustomAxis <- function(fusionPlot, showlabels = TRUE, xAxisPosition = c("bottom", "top", "left", "right"), yAxisPosition = c("left", "right", "top", "bottom"),
+fusionCustomAxis <- function(fusionPlot, showlabels = TRUE, xAxisPosition = c("bottom", "top", "left", "right"), yAxisPosition = c("left", "right", "top", "bottom"), yAxisMaxValue = NULL,
                              AxisNameBorderColor = NULL, AxisNameBorderAlpha = "0", AxisNameBorderPadding = "6", AxisNameBorderRadius = "3",
                              AxisNameBorderThickness = "2", AxisNameBorderDashed = FALSE, AxisNameBorderDashLen = "4", AxisNameBorderDashGap = "2",
                              AxisNameBgColor = NULL, AxisNameBgAlpha = "0", AxisNameFontAlpha = "100", AxisValueFont = "Arial", AxisValueFontSize = "1px", 
@@ -118,6 +119,7 @@ fusionCustomAxis <- function(fusionPlot, showlabels = TRUE, xAxisPosition = c("b
 
   
   CustomAxisAttrs$yAxisPosition <- match.arg(yAxisPosition)
+  CustomAxisAttrs$yAxisMaxValue <- yAxisMaxValue
   
   if(is.null(AxisNameBorderColor)){
     CustomAxisAttrs$yAxisNameBorderColor <- ""
@@ -207,6 +209,7 @@ fusionCustomAxis <- function(fusionPlot, showlabels = TRUE, xAxisPosition = c("b
   
   
   fusionPlot$x$yAxisPosition <- CustomAxisAttrs$yAxisPosition
+  fusionPlot$x$yAxisMaxValue <- CustomAxisAttrs$yAxisMaxValue
   fusionPlot$x$yAxisNameBorderColor <- CustomAxisAttrs$yAxisNameBorderColor
   fusionPlot$x$yAxisNameBorderAlpha <- CustomAxisAttrs$yAxisNameBorderAlpha
   fusionPlot$x$yAxisNameBorderPadding <- CustomAxisAttrs$yAxisNameBorderPadding
@@ -236,4 +239,5 @@ fusionCustomAxis <- function(fusionPlot, showlabels = TRUE, xAxisPosition = c("b
   fusionPlot$x$yAxisValueBorderDashGap <-  CustomAxisAttrs$yAxisValueBorderDashGap
   
   return(fusionPlot)
+
 }

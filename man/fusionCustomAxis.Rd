@@ -9,6 +9,7 @@ fusionCustomAxis(
   showlabels = TRUE,
   xAxisPosition = c("bottom", "top", "left", "right"),
   yAxisPosition = c("left", "right", "top", "bottom"),
+  yAxisMaxValue = NULL,
   AxisNameBorderColor = NULL,
   AxisNameBorderAlpha = "0",
   AxisNameBorderPadding = "6",
@@ -46,6 +47,8 @@ fusionCustomAxis(
 \item{xAxisPosition}{change the position of the x-axis}
 
 \item{yAxisPosition}{change the position of the y-axis}
+
+\item{yAxisMaxValue}{Set the upper limit of the y-axis}
 
 \item{AxisNameBorderColor}{Set the border color of the name of the axis}
 

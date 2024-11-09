@@ -39,4 +39,5 @@ fusionTooltip <- function(fusionPlot, showToolTip = TRUE, toolTipBorderColor = "
   
   
   return(fusionPlot)
+
 }

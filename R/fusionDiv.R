@@ -85,4 +85,5 @@ fusionDiv <- function(fusionPlot, adjustDiv = FALSE, numDivLines = "5", divLineC
   fusionPlot$x$alternateVGridAlpha <- DivAttrs$alternateVGridAlpha
   
   return(fusionPlot)
+
 }

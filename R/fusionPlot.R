@@ -7,37 +7,43 @@
 #' @import htmlwidgets
 #' @importFrom jsonlite toJSON
 #' @importFrom grDevices boxplot.stats
-#'
+#' @importFrom stats na.omit
 #'
 #' @param data Default dataset to use
 #' @param x,y character name of variable
-#' @param type See `available_charts()`
+#' @param type type of chart
 #' @param numberSuffix Specify the suffix for all the Y-axis values on the chart
 #'
-#'
+#' @details A 2x2 confusion matrix can be displayed using `type = "confusionMatrix"`.
+#' 
 #' @export
-fusionPlot <- function(data,x, y, type = "column2d", numberSuffix = NULL) {
+fusionPlot <- function(data, x, y, type = "column2d", numberSuffix = NULL) {
+  
+  # Include unit tests
+  if(type %in% c("confusionMatrix", "heatmap")){
+    stopifnot(is.matrix(data))
+  } else {
+    stopifnot(is.data.frame(data))
+    stopifnot(is.character(x))
+    stopifnot(is.character(y))
+  }
+  
+  stopifnot(is.character(type))
+  stopifnot(is.character(numberSuffix) | is.null(numberSuffix))
+  
+
+  # Include key license
+  license <- Sys.getenv("LICENSE_FUSIONCHARTS")
   
   # Main arguments
   category <- NULL
   dataset <- NULL
+  mapbycategory <- "0"
+  colorrange <- NULL
+  columns <- NULL
+  rows <- NULL
   
-  # boxandwhisker2d arguments
-  showmean <- "0"
-  showalloutliers <- NULL
-
-  charts <- available_charts()
-
-  if(type %in% charts[[1]][-c(13:14)]){
-
-    new.data <- data.frame(label = factor(data[,x]), value = data[,y])
-    data <- toJSON(x = new.data, pretty = TRUE)
-
-  }
-  
-  else if(type == "boxandwhisker2d"){
-    
-    showmean <- "1"
+  if(type == "boxandwhisker2d"){
     
     xaxis <- factor(data[,x])
     df <- list(category = data.frame(label = as.character(levels(xaxis))))
@@ -45,42 +51,106 @@ fusionPlot <- function(data,x, y, type = "column2d", numberSuffix = NULL) {
     
     n <- unique(levels(xaxis))
     df.list <- lapply(1:length(n), function(i){
-      yaxis <- data[data[,x] == n[i],y]
+      yaxis <- na.omit(data[data[,x] == n[i],y])
       stats <- boxplot.stats(yaxis)
       if(length(stats$out) >= 1){
         list(
           value = toString(yaxis[! yaxis %in% unique(stats$out)]),
           outliers = toString(unique(stats$out))
         )
-      }
-      else {
+      } else {
         list(
           value = toString(yaxis)
         )
       }
     })
     
-    if(length(grep(pattern = "outliers", x = df.list)) > 0){
-      showalloutliers <- 1
-    }
-    else {
-      showalloutliers <- 0
-    }
-    
     newlist <- list(seriesname = y, data = df.list)
     dataset <- toJSON(x = newlist, pretty = TRUE, auto_unbox = TRUE)
     
-  }
-  else if(type == "scatter"){
+  } else if(type %in% c("confusionMatrix", "heatmap")){
+    
+    column01 <- list(
+      column = data.frame(
+        id = paste0("GROUP", colnames(data)),
+        label = colnames(data)
+      )
+    )
+    
+    row01 <- list(
+      row = data.frame(
+        id = paste0("group", rownames(data)),
+        label = rownames(data)
+      )
+    )
+    
+    columnid <- lapply(1:length(column01$column$id), function(x){
+      rep(column01$column$id[x], times = ncol(data))
+    })
+    
+    if(type == "confusionMatrix"){
+      
+      mapbycategory <- "1"
+      
+      color <- list(
+        gradient = c("0", "0"),
+        color = data.frame(
+          code = c("#5E72E4", "#FFFFFF"),
+          minvalue = c("0", "0"),
+          maxvalue = c("Infinity", "Infinity"),
+          label = c("Good", "Bad")
+        )
+      )
+      
+      data01 <- list(
+        data = data.frame(
+          rowid = rep(row01$row$id, times = nrow(data)),
+          columnid = do.call(c, columnid),
+          displayvalue = as.character(as.vector(data)),
+          colorrangelabel = c("Good", "Bad", "Bad", "Good")
+        )
+      )
+      
+    } else {
+    
+      color <- list(
+        gradient = "1",
+        startlabel = "Negative",
+        endlabel = "Positive",
+        color = data.frame(
+          code = c("#FF595E", "#FFFFFF", "#5E72E3"),
+          maxvalue = c("-1", "0", "1")
+        )
+      )
+      
+      data01 <- list(
+        data = data.frame(
+          rowid = rep(row01$row$id, times = nrow(data)),
+          columnid = do.call(c, columnid),
+          value = as.character(as.vector(data))
+        )
+      )
+      
+    }
+    
+    type <- "heatmap"
+    colorrange <- toJSON(x = color, pretty = TRUE, auto_unbox = TRUE)
+    columns <- toJSON(x = column01, pretty = TRUE)
+    rows <- toJSON(x = row01, pretty = TRUE)
+    dataset <- toJSON(x = data01, pretty = TRUE, auto_unbox = TRUE)
+    
+  }  else if(type == "scatter"){
     
     df <- data.frame(x = data[,x], y = data[,y])
-    dataset <- list(data = df)
-    dataset <- toJSON(x = dataset, pretty = TRUE, auto_unbox = TRUE)
+    dataset <- toJSON(x = list(data = df), pretty = TRUE, auto_unbox = TRUE)
+    
+  } else {
+    
+    new.data <- data.frame(label = factor(data[,x]), value = data[,y])
+    data <- toJSON(x = new.data, pretty = TRUE)
     
   }
-  else{
-    stop('Chart not available. Please check `fusionMultiPlot()`')
-  }
+  
 
 
 #' @examples
@@ -95,13 +165,16 @@ fusionPlot <- function(data,x, y, type = "column2d", numberSuffix = NULL) {
 
   # forward options using x
   x <- list(
+    key_license = license,
     data = data,
     categories = category,
     dataset = dataset,
     type = type,
     numberSuffix = numberSuffix,
-    showmean = showmean,
-    showalloutliers = showalloutliers
+    columns = columns,
+    rows = rows,
+    colorrange = colorrange,
+    mapbycategory = mapbycategory
     )
 
   # create widget
@@ -123,6 +196,7 @@ fusionPlot <- function(data,x, y, type = "column2d", numberSuffix = NULL) {
     fusionPalette() %>%
     fusionAnchors() %>%
     fusionTrendline() %>%
+    fusionCustomBoxplot() %>%
     fusionDiv() %>%
     fusionTooltip() %>%
     fusionLogo() %>%

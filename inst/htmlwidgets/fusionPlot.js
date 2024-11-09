@@ -16,28 +16,30 @@ HTMLWidgets.widget({
     var fusioncharts = new FusionCharts({
     type: x.type,
     renderAt: el,
+    key: x.license,
+    creditLabel: false,
     width: "100%",
     height: "100%",
     dataFormat: 'json',
     dataSource: {
         // Chart Configuration
         "chart": {
-          
           // fusionPlot()
           "numberSuffix": x.numberSuffix,
+          "mapbycategory": x.mapbycategory,
           
-          "mediancolor": "#FFFFFF",
+          // fusionCustomBoxplot()
           "showmean": x.showmean,
-          "meaniconshape": "polygon",
-          "meaniconsides": "2",
-          "meaniconsides": "2",
-          "meaniconradius": "2",
-
+          "drawmeanconnector": x.drawmeanconnector,
+          "mediancolor": x.mediancolor,
+          "meaniconshape": x.meaniconshape,
+          "meaniconsides": x.meaniconsides,
+          "meaniconradius": x.meaniconradius,
           "showalloutliers": x.showalloutliers,
-          "outliericonsides": "20",
-          "outliericonalpha": "40",
-          "outliericonshape": "triangle",
-          "outliericonsradius": "4",
+          "outliericonsides": x.outliericonsides,
+          "outliericonalpha": x.outliericonalpha,
+          "outliericonshape": x.outliericonshape,
+          "outliericonsradius": x.outliericonsradius,
 
           // fusionCaption()
           "caption": x.caption,
@@ -126,6 +128,7 @@ HTMLWidgets.widget({
           "xAxisValueBorderDashGap": x.xAxisValueBorderDashGap,
 
           "yAxisPosition": x.yAxisPosition,
+          "yAxisMaxValue": x.yAxisMaxValue,
           "yAxisNameBorderColor": x.yAxisNameBorderColor,
           "yAxisNameBorderAlpha": x.yAxisNameBorderAlpha,
           "yAxisNameBorderPadding": x.yAxisNameBorderPadding,
@@ -295,9 +298,15 @@ HTMLWidgets.widget({
           x.categories
         ],
         
+        "colorrange": x.colorrange,
+        
         "dataset": [
           x.dataset
         ],
+        
+        // heatmap
+        "columns": x.columns,
+        "rows": x.rows,
 
         // fusionTrendline()
         "trendlines": [{

@@ -101,4 +101,5 @@ fusionBackground <- function(fusionPlot, showBorder = FALSE,  borderColor = "#66
 
   
   return(fusionPlot)
+  
 }

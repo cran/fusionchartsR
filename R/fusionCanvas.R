@@ -79,4 +79,5 @@ fusionCanvas <- function(fusionPlot, showCanvasBg = FALSE, canvasbgColorFirst = 
   
   
   return(fusionPlot)
+
 }

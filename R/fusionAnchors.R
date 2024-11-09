@@ -56,6 +56,3 @@ fusionAnchors <- function(fusionPlot, drawAnchors = TRUE, showvalues = FALSE, an
   return(fusionPlot)
 }
 
-
-
-

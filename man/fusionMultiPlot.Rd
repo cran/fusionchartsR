@@ -4,14 +4,7 @@
 \alias{fusionMultiPlot}
 \title{Create new multiple charts}
 \usage{
-fusionMultiPlot(
-  data,
-  x,
-  y,
-  col = NULL,
-  type = "msstepline",
-  numberSuffix = NULL
-)
+fusionMultiPlot(data, x, y, col, type = "msstepline", numberSuffix = NULL)
 }
 \arguments{
 \item{data}{Default dataset to use}
@@ -20,7 +13,7 @@ fusionMultiPlot(
 
 \item{col}{define seriesname variable}
 
-\item{type}{See `available_charts()`}
+\item{type}{type of chart}
 
 \item{numberSuffix}{Specify the suffix for all the Y-axis values on the chart}
 }
